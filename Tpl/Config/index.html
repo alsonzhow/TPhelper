@@ -75,12 +75,15 @@ $(function () {
 				var query = '';
 				var conflist = $("#conf"), custom = $("#custom_conf");
 				//响应数据判断
+				if (version == 3.0) {
+					data=$.parseJSON(data).data;
+				}
 				if (data == '') {
 					conflist.append("您的应用全部采用默认配置");
 					return
 				}
 				else if ($.type(data).toLowerCase() == "string") {
-					updateAlert("ajax请求目标不存在");
+					updateAlert("ajax请求目标:"+requestfile+"不存在");
 					return
 				}
 				else if (data.error) {
@@ -89,6 +92,7 @@ $(function () {
 					return
 				}
 				$.each(data, function (k, val) {
+					console.log(data);
 					var input = $("#" + k);
 					var label = $("." + k);
 					var br = $("#" + k + "+br");

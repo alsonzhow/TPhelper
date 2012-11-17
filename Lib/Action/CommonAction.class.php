@@ -43,6 +43,7 @@ class CommonAction extends Action
 			}
 			cookie( 'think_path', CheckConfig::dirModifier(THINK_PATH ));
 			cookie( 'tp_helper', CheckConfig::dirModifier(APP_PATH));
+			cookie( 'version', THINK_VERSION );
 			///////include模板变量分配区域/////////
 			$this->include_assign();
 		}

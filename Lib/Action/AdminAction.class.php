@@ -322,6 +322,7 @@ class AdminAction extends CommonAction
 				cookie( 'switch', 'on', 0 );
 				cookie( 'think_path', CheckConfig::dirModifier( THINK_PATH ) );
 				cookie( 'tp_helper', CheckConfig::dirModifier( APP_PATH ) );
+				cookie( 'version', THINK_VERSION );
 			}
 		}
 		$this->success( '切换项目成功，即将返回首页', U( 'Index/index' ) );

@@ -36,6 +36,11 @@ ThinkPHP助手是运行在本地的ThinkPHP开发辅助性工具，也是本人�
 * IE9 IE10
   不支持IE6-8
 
+### 环境需求
+
+PHP>=5.3  ThinkPHP>=3.1
+兼容3.0。由于精力有限，不能进行详细的3.0兼容性测试，如果发现某些地方不兼容3.0,可将不兼容地地方报告，我很快可更新。
+
 ### 项目主页
 
 https://github.com/snowair/TPhelper
