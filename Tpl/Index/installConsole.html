@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file='Common:header' />
+</head>
+<body>
+<include file='Common:navbar' />
+<div class="container content">
+	<div class="row body-content">
+		<div class="span3">
+			<include file="Common:leftbar" />
+
+		</div>
+		<div class="span9">
+			<div class="alert alert-info">
+				Console工具封装了Firefox上的FirePHP扩展支持和Chrome浏览器上的ChromePHP扩展支持，是一个方便的输出调试工具。<br/>
+				要使用它，你首先应该安装Firefox上的FirePHP扩展或者Chrome浏览器上的ChromePHP扩展，或者你都安装。扩展安装好以后，就可以安装ThinkPHP助手封装的调试支持工具。
+			</div>
+			<div class="install">
+
+			</div>
+			<script type="text/javascript">
+				var extension,browser_name;
+				console.log($.browser);
+				if($.browser.chrome){
+					browser_name='Chrome'
+					extension ="https://chrome.google.com/webstore/detail/chromephp/noaneddfkdjfnfdakjjmocngnfkfehhd?hl=zh-CN";
+				}else if ($.browser.mozilla) {
+					browser_name='Firefox'
+					extension = 'https://addons.mozilla.org/en-US/firefox/addon/firephp/';
+				}
+				$('.install').html('您使用的浏览器可能是'+browser_name+' ,<a href="'+extension+'" target="_blank">点此</a>安装ChromePHP扩展')
+			</script>
+		</div>
+	</div>
+</div>
+<{$footer}>
+</body>
+</html>

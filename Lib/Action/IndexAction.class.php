@@ -14,9 +14,11 @@ class IndexAction extends CommonAction
 		$this->assign( 'extensions', get_loaded_extensions() );
 		$this->assign( 'pagetitle', '首页--ThinkPHP助手' );
 		$this->assign( 'php_version', PHP_VERSION );
-		$this->assign('mysql_client',mysql_get_client_info());
-		$this->assign( 'mysql_host', mysql_get_host_info() );
-		$this->assign( 'mysql_server', mysql_get_server_info() );
+		if ( function_exists( 'mysql_get_client_info' ) ) {
+			$this->assign( 'mysql_client', mysql_get_client_info() );
+			$this->assign( 'mysql_host', mysql_get_host_info() );
+			$this->assign( 'mysql_server', mysql_get_server_info() );
+		}
 		cookie( 'version', THINK_VERSION );
 		$this->display( 'index' );
 	}
@@ -26,6 +28,10 @@ class IndexAction extends CommonAction
 	}
 
 	public function pregTest() {
+		$this->display();
+	}
+
+	public function installConsole() {
 		$this->display();
 	}
 

@@ -7,18 +7,25 @@
 class CommonAction extends Action
 {
 	protected static $init = false;
+	protected static $destruct=false;
 	protected $common_tpl = array(
 		'header'=> 'Common:header',
 		'navbar'=> 'Common:navbar',
 		'footer'=> 'Common:footer', );
 	protected $include_tpl = array();
 
+	public function __construct() {
+		if ( get_class($this)==MODULE_NAME.'Action' ) {
+			parent::__construct();
+		}
+	}
+
 	protected function _initialize() {
 		if ( !self::$init ) {
 			self::$init = true; //标记已经进入初始化，否则new AdminAction将陷入死递归
 			//所有action初始化代码放在这个大括号内部，否则下面的AdminAction实例化时又将重复执行一次初始化代码，注意不同功能代码可能需要一定的顺序
 
-			///////自定义行为扩展区///////////////
+			///////自定义扩展区///////////////
 			///////cookie初始化区域///////////
 			$listapp = new AdminAction();
 			$list    = $listapp->listAPP();
@@ -67,4 +74,9 @@ class CommonAction extends Action
 		parent::display($templateFile,$charset,$contentType,$content,$prefix);
 	}
 
+	public function __destruct() {
+		if ( get_class($this)==MODULE_NAME.'Action' ) {
+			parent::__destruct();
+		}
+	}
 }
