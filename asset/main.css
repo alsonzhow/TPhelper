@@ -201,7 +201,7 @@ input.check_fail {
 }
 .leftbar .active i,.leftbar li>a:hover >i{
     opacity: 1;
-    background-image: url("bootstrap/img/glyphicons-halflings-white.png");
+    background-image: url("../public/jsLib/bootstrap/img/glyphicons-halflings-white.png");
 }
 .leftbar {
     background-color: #fff;
