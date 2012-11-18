@@ -150,7 +150,7 @@ class AdminAction extends CommonAction
 		}
 		$this->setIndex();
 		$this->app_name  = $this->appinfo['project'];
-		$this->app_path  = realpath( $this->appinfo['APP_PATH'] );
+		$this->app_path  = CheckConfig::dirModifier(realpath( $this->appinfo['APP_PATH'] ));
 		$this->app_index = $this->appinfo['BASE_DIR'].$this->appinfo['INDEX_FILE'];
 		chdir( APP_PATH );
 		if ( !$this->updateAPP() ) {

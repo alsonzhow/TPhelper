@@ -59,7 +59,7 @@ class FileManagerAction extends CommonAction
 
 	public function addlibs() {
 		if ( isset($_POST['jslibs']) ) {
-			$dir = json_decode( $_COOKIE['base_dir'] );
+			$dir = cookie( 'base_dir' );
 			if ( !file_exists( $dir.'js'.DIRECTORY_SEPARATOR ) ) {
 				if ( !mkdir( $dir.'js'.DIRECTORY_SEPARATOR ) ) {
 					$this->error( $dir.'---没有写入权限' );

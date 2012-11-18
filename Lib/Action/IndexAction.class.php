@@ -14,7 +14,7 @@ class IndexAction extends CommonAction
 		$this->assign( 'extensions', get_loaded_extensions() );
 		$this->assign( 'pagetitle', '首页--ThinkPHP助手' );
 		$this->assign( 'php_version', PHP_VERSION );
-		if ( function_exists( 'mysql_get_client_info' ) ) {
+		if (strcmp(PHP_VERSION ,"5.4.0")<0 ) {
 			$this->assign( 'mysql_client', mysql_get_client_info() );
 			$this->assign( 'mysql_host', mysql_get_host_info() );
 			$this->assign( 'mysql_server', mysql_get_server_info() );
