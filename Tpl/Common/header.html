@@ -8,8 +8,10 @@
 <load file='__ROOT__/asset/js/main.js' />
 <load file="__ROOT__/asset/js/checkfield.js" />
 <load file='__ROOT__/public/jsLib/bootstrap/css/bootstrap.css' />
+<load file='__ROOT__/public/jsLib/bootstrap/google-code-prettify/prettify.css'/>
 <load file='__ROOT__/asset/main.css' />
 <load file='__ROOT__/public/jsLib/bootstrap/bootstrap.min.js' />
+<load file='__ROOT__/public/jsLib/bootstrap/google-code-prettify/prettify.js'/>
 <script type="text/javascript">
 	var APP = "__APP__";
 	var app_path = $.cookies.get('config_path');
@@ -19,6 +21,6 @@
 	$(function () {
 		//首页的tooltip绑定
 		$('.leftbar>li').tooltip({placement:'right'});
-
+		prettyPrint()
 	});
 </script>

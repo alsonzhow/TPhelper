@@ -100,7 +100,7 @@ class Console
 	}
 
 	static function error( $var, $label = 'ERROR  ' ) {
-		self::debug( $var, $label.'@ '.basename( __FILE__ ).' Line:'.__LINE__, 'ERROR' );
+		self::debug( $var, $label, 'ERROR' );
 	}
 
 	static function log( $var, $label = 'LOG    ' ) {

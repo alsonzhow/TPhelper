@@ -37,17 +37,19 @@
 </div>
 
 <script type="text/javascript">
-	$('.app_name').text("当前项目："+app_name);
-	var search={
-		php:"http://cn2.php.net/search.php",
-		jquery:'http://api.jquery.com/?ns0=1&s=keywords',
+	$(function () {
+		$('.app_name').text("当前项目：" + app_name);
+	})
+	var search = {
+		php     :"http://cn2.php.net/search.php",
+		jquery  :'http://api.jquery.com/?ns0=1&s=keywords',
 		thinkphp:'http://doc.thinkphp.cn/manual/_search.html'
 	}
-	function getAction(){
-		var keyword=$("input[name='pattern']").val();
-		var url=search[$('#docname').val()].replace(/keywords/, keyword );
+	function getAction() {
+		var keyword = $("input[name='pattern']").val();
+		var url = search[$('#docname').val()].replace(/keywords/, keyword);
 		$('#docform').attr('action', url);
-		$("input[name='keywords']").val(keyword )
+		$("input[name='keywords']").val(keyword)
 	}
 	getAction();
 </script>
