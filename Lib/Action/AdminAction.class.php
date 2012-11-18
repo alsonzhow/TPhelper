@@ -13,10 +13,6 @@ class AdminAction extends CommonAction
 	private $appinfo = array(); //永远保存应用创建时需要的信息
 	private $error = array();
 
-	public function index() {
-		$this->display();
-	}
-
 	/**
 	 * 添加需要TPbuilder管理的应用
 
@@ -144,26 +140,29 @@ class AdminAction extends CommonAction
 	}
 
 	public function createAPP() {
-
 		if ( !IS_POST ) {
 			$this->error( '非法请求' );
 		}
 		$this->setIndex();
+		chdir( $this->appinfo['BASE_DIR'] );//chdir改变工作目录以后执行realpath获取app_path
+		//以下三行为写入applist.xml的三个属性
 		$this->app_name  = $this->appinfo['project'];
 		$this->app_path  = CheckConfig::dirModifier(realpath( $this->appinfo['APP_PATH'] ));
 		$this->app_index = $this->appinfo['BASE_DIR'].$this->appinfo['INDEX_FILE'];
-		chdir( APP_PATH );
-		if ( !$this->updateAPP() ) {
+		chdir ( APP_PATH );//恢复工作目录到TP助手主目录
+		if ( !$this->updateAPP() ) {//写入applist.xml
 			$this->assign( 'error_list', $this->error );
 			$this->error( '啊欧～出错啦！' );
 			return;
 		}
-		chdir( $this->appinfo['BASE_DIR'] );
+		//创建入口文件
 		$this->bulidIndex();
+		//构造入口文件的url
 		$wwwroot   = CheckConfig::dirmodifier( $_SERVER['DOCUMENT_ROOT'] );
 		$localhost = strtr( $this->appinfo['BASE_DIR'], array( $wwwroot=> "http://".$_SERVER['HTTP_HOST'].':'.$_SERVER['SERVER_PORT'].'/' ) );
+		//访问入口文件
 		$content   = file_get_contents( $localhost.$this->appinfo['INDEX_FILE'] );
-
+		//更新cookie
 		cookie( 'config_path', $this->app_path.'Conf/config.php' );
 		cookie( 'base_dir', $this->appinfo['BASE_DIR'] );
 		cookie( 'app_name', $this->app_name );
@@ -211,11 +210,12 @@ class AdminAction extends CommonAction
 	}
 
 	protected function setIndex() {
-		$appinfo['BASE_DIR']   = CheckConfig::dirModifier( $_POST['BASE_DIR'] );
-		$appinfo['INDEX_FILE'] = $_POST['INDEX_FILE'];
+		$appinfo['BASE_DIR']   = CheckConfig::dirModifier( $_POST['BASE_DIR'] );//项目目录,绝对路径
+		$appinfo['INDEX_FILE'] = $_POST['INDEX_FILE'];//入口文件名
 		$appinfo['APP_NAME']   = $_POST['APP_NAME'];
-		$appinfo['APP_PATH']   = CheckConfig::dirModifier( $_POST['APP_PATH'] );
-		$appinfo['THINK_PATH'] = CheckConfig::dirModifier( $_POST['THINK_PATH'] );
+		$appinfo['APP_PATH']   = CheckConfig::dirModifier( $_POST['APP_PATH'] );//APP_PATH 相对路径
+		Console::log ( $_POST[ 'APP_PATH' ] );
+		$appinfo['THINK_PATH'] = CheckConfig::dirModifier( $_POST['THINK_PATH'] );//相对路径
 		$appinfo['APP_DEBUG']  = in_array( strtolower( $_POST['APP_DEBUG'] ), array(
 																				   'on',
 																				   'true',
@@ -231,7 +231,7 @@ class AdminAction extends CommonAction
 	}
 
 	protected function bulidIndex() {
-		$file = new SplFileObject($this->appinfo['INDEX_FILE'], 'wb+');
+		$file = new SplFileObject($this->appinfo['BASE_DIR'].$this->appinfo['INDEX_FILE'], 'wb+');
 		$file->fwrite( '<?php'.PHP_EOL );
 		$file->fwrite( "define('APP_NAME','"."{$this->appinfo['APP_NAME']}');".PHP_EOL );
 		$file->fwrite( "define('APP_DEBUG',"."{$this->appinfo['APP_DEBUG']});".PHP_EOL );
@@ -243,8 +243,7 @@ class AdminAction extends CommonAction
 		$file->fwrite( "require_once THINK_PATH.'ThinkPHP.php';".PHP_EOL );
 		if ( isset($_POST['gitignore'] )) {
 			$git      = dirname( dirname( __DIR__ ) ).DIRECTORY_SEPARATOR.".gitignore";
-			$BASE_DIR = $this->appinfo['BASE_DIR'];
-			copy( $git, $BASE_DIR.'.gitignore' );
+			copy( $git, $this->appinfo['BASE_DIR'].'.gitignore' );
 		}
 	}
 
@@ -257,12 +256,14 @@ class AdminAction extends CommonAction
 			mkdir( $appinfo['BASE_DIR'], 0777, true );
 		}
 		chdir( $appinfo['BASE_DIR'] );
-		$app_path = dirname( $appinfo['APP_PATH'] );
-		if ( !is_writable( $app_path ) ) {
-			$this->error[] = "无法创建目录：".$appinfo['APP_PATH'];
+		$app_basepath = realpath(dirname($appinfo['APP_PATH']));
+		if(!$app_basepath){
+			$this->error[] = "无法创建目录：".$appinfo['APP_PATH']."，大概它的父目录不存在。";
+		}elseif ( !is_writable( $app_basepath ) ) {
+			$this->error[] = "无法创建目录：".$appinfo['APP_PATH']."，大概{$app_basepath}的权限不足。";
 		}
 		if ( !is_file( $appinfo['THINK_PATH'].'ThinkPHP.php' ) ) {
-			$this->error[] = "无法找到框架核心文件";
+			$this->error[] = "无法找到框架核心文件,‘项目目录’和‘THINK_PATH’之一填错鸟...";
 		}
 		if ( !CheckConfig::isBool( $appinfo['APP_DEBUG'] ) ) {
 			$this->error[] = "APP_DEBUG需要布尔值true或false";
@@ -282,6 +283,7 @@ class AdminAction extends CommonAction
 		if ( !CheckConfig::isChars( $appinfo['project'] ) ) {
 			$this->error[] = "项目命名不允许特殊字符";
 		}
+		chdir ( APP_PATH );
 		if ( $this->error ) {
 			return false;
 		}

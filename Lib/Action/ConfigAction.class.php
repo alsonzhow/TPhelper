@@ -52,13 +52,14 @@ class ConfigAction extends CommonAction
 
 	public function index() {
 		if ( isset($_GET['config_path']) ) {
-			cookie( 'config_path', $_GET['config_path'] );
+			cookie( 'config_path', realpath($_GET['config_path'] ));
 		}
 
 		$dir = cookie('base_dir');
 		if ( is_dir( $dir ) ) {
 			chdir( $dir );
 			$config_list = glob( 'Conf'.DIRECTORY_SEPARATOR.'{*,*'.DIRECTORY_SEPARATOR.'*}.php', GLOB_BRACE );
+			chdir ( APP_PATH );
 			$config_list = preg_grep( '/alias.php$|tags.php$/iU', $config_list, PREG_GREP_INVERT );
 			if ( count( $config_list )>0 ) {
 				$this->assign( 'config_list', $config_list );

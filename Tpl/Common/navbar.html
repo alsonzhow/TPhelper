@@ -1,11 +1,11 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container">
-			<a class="brand" href="__APP__">ThinkPHP助手</a>
+			<a class="brand" href="__APP__" data-original-title="返回TP助手首页">ThinkPHP助手</a>
 			<ul class="nav">
 				<li class="divider-vertical"></li>
 
-				<li><a class="app_name" style="color: #ffffff;font-weight: bold;"></a></li>
+				<li><a href="" class="app_name" data-original-title="访问项目首页" style="color: #ffffff;font-weight: bold;" target="_blank"></a></li>
 			</ul>
 
 			<form class="pull-right" id="docform" action="" method="post" enctype="application/x-www-form-urlencoded" target="_blank">
@@ -37,9 +37,9 @@
 </div>
 
 <script type="text/javascript">
-	$(function () {
-		$('.app_name').text("当前项目：" + app_name);
-	})
+	$('.navbar .app_name').text("当前项目：" + app_name);
+	$('.navbar .app_name').attr('href', app_url);
+	$('.navbar a').tooltip({placement:'bottom'});
 	var search = {
 		php     :"http://cn2.php.net/search.php",
 		jquery  :'http://api.jquery.com/?ns0=1&s=keywords',

@@ -524,12 +524,12 @@
 		</item>
 		<item id="APP_GROUP_MODE">
 			<title>分组模式</title>
-			<document>http://doc.thinkphp.cn/manual/module_group.html</document>
-			<infomation>ThinkPHP3.2有效</infomation>
+			<document>http://www.thinkphp.cn/info/177.html</document>
+			<infomation>ThinkPHP3.1.2有效</infomation>
 		</item>
 		<item id="APP_GROUP_PATH">
 			<title>分组目录</title>
-			<document>http://doc.thinkphp.cn/manual/module_group.html</document>
+			<document>http://www.thinkphp.cn/info/177.html</document>
 			<infomation>在独立分组模式下有效。默认为：modules</infomation>
 		</item>
 	</category>
