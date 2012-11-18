@@ -27,6 +27,9 @@ class CommonAction extends Action
 
 			///////自定义扩展区///////////////
 			///////cookie初始化区域///////////
+			if ( C('COOKIE_PATH')=='/' ) {
+				C( 'COOKIE_PATH', __ROOT__ );
+			}
 			$listapp = new AdminAction();
 			$list    = $listapp->listAPP();
 			if ( $list==false ) {
