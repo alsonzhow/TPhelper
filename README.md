@@ -28,6 +28,11 @@ ThinkPHP助手是运行在本地的ThinkPHP开发辅助性工具，也是本人�
 	**原生的preg_***函数正则表达式测试，支持**preg_match，preg_match_all，preg_replace**三种函数。
 ![Plugin Screenshot](https://github.com/snowair/TPhelper/blob/master/screenshot/3.png?raw=true)
 
+6. **Console工具支持**
+
+	封装了对FirePHP和ChromePHP的支持，使用兼容二者的调试语句输出变量。您可以一键为任何一个TP项目增加Console调试功能，并可随时关闭功能	。
+![Plugin Screenshot](https://github.com/snowair/TPhelper/blob/master/asset/img/chromePHP.png?raw=true)
+
 ### 浏览器要求
 * Chrome
 
