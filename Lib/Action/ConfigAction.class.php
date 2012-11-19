@@ -57,7 +57,7 @@ class ConfigAction extends CommonAction
 		if ( is_dir( $dir ) ) {
 			chdir( $dir );
 			$config_list = glob( 'Conf'.DIRECTORY_SEPARATOR.'{*,*'.DIRECTORY_SEPARATOR.'*}.php', GLOB_BRACE );
-			if ( $configs['APP_GROUP_MODE']=='1' && $configs['APP_GROUP_PATH'] ) {
+			if ( isset($configs['APP_GROUP_MODE'],$configs['APP_GROUP_PATH'])&& $configs['APP_GROUP_MODE']=='1' && $configs['APP_GROUP_PATH'] ) {
 				$config_list2 = glob( CheckConfig::dirModifier( $configs['APP_GROUP_PATH'] ).'*/Conf/{*,*/*}.php', GLOB_BRACE );
 				$config_list=array_merge($config_list,$config_list2);
 			}
