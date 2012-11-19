@@ -23,6 +23,7 @@ class CommonAction extends Action
 	protected function _initialize() {
 		if ( !self::$init ) {
 			self::$init = true; //标记已经进入初始化，否则new AdminAction将陷入死递归
+			define('TH_VERSION','1.1.1');
 			//所有action初始化代码放在这个大括号内部，否则下面的AdminAction实例化时又将重复执行一次初始化代码，注意不同功能代码可能需要一定的顺序
 
 			///////自定义扩展区///////////////
@@ -67,6 +68,7 @@ class CommonAction extends Action
 		$this->assign( 'pagetitle', 'ThinkPHP助手' );
 		$this->assign( 'waittime', 3 );//success和error默认跳转等待时间
 		$this->assign( 'cookie_prefix', C( 'COOKIE_PREFIX' ) );
+		$this->assign( 'th_version', TH_VERSION );
 	}
 
 	protected function include_fetch() {
