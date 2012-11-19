@@ -214,7 +214,6 @@ class AdminAction extends CommonAction
 		$appinfo['INDEX_FILE'] = $_POST['INDEX_FILE'];//入口文件名
 		$appinfo['APP_NAME']   = $_POST['APP_NAME'];
 		$appinfo['APP_PATH']   = CheckConfig::dirModifier( $_POST['APP_PATH'] );//APP_PATH 相对路径
-		Console::log ( $_POST[ 'APP_PATH' ] );
 		$appinfo['THINK_PATH'] = CheckConfig::dirModifier( $_POST['THINK_PATH'] );//相对路径
 		$appinfo['APP_DEBUG']  = in_array( strtolower( $_POST['APP_DEBUG'] ), array(
 																				   'on',

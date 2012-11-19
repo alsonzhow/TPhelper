@@ -50,20 +50,19 @@ class ConfigAction extends CommonAction
 
 	public function index() {
 		if ( isset($_GET['config_path']) ) {
-			cookie( 'config_path', realpath( $_GET['config_path'] ) );
+			cookie( 'config_path', realpath( $_GET['config_path'] ) );//为前台ajax更新config_path
 		}
 		$dir     = cookie( 'base_dir' );
-		$configs = include $dir.'Conf/config.php';
 		if ( is_dir( $dir ) ) {
+			$configs = include $dir.'Conf/config.php';
 			chdir( $dir );
 			$config_list = glob( 'Conf'.DIRECTORY_SEPARATOR.'{*,*'.DIRECTORY_SEPARATOR.'*}.php', GLOB_BRACE );
-			if ( isset($configs['APP_GROUP_MODE'],$configs['APP_GROUP_PATH'])&& $configs['APP_GROUP_MODE']=='1' && $configs['APP_GROUP_PATH'] ) {
+			if ( isset($configs['APP_GROUP_MODE'], $configs['APP_GROUP_PATH']) && $configs['APP_GROUP_MODE']=='1' && $configs['APP_GROUP_PATH'] ) {
 				$config_list2 = glob( CheckConfig::dirModifier( $configs['APP_GROUP_PATH'] ).'*/Conf/{*,*/*}.php', GLOB_BRACE );
-				$config_list=array_merge($config_list,$config_list2);
+				$config_list  = array_merge( $config_list, $config_list2 );
 			}
 			chdir( APP_PATH );
 			$config_list = preg_grep( '/alias.php$|tags.php$/iU', $config_list, PREG_GREP_INVERT );
-			Console::log( $config_list );
 			if ( count( $config_list )>0 ) {
 				$this->assign( 'config_list', $config_list );
 				$this->assign( 'dir', $dir );
@@ -78,10 +77,14 @@ class ConfigAction extends CommonAction
 	public function build() {
 		$this->source = isset($_GET['filter']) ? array_filter( array_unique( array_merge( $this->source, explode( ",", trim( $_GET['filter'], ', ' ) ) ) ) ) : $this->source;
 		$config_path  = cookie( 'config_path' );
-		$this->setConfig();
-		$this->bulidConfig( $config_path );
-		$this->assign( 'waittime', 3 );
-		$this->success( '操作成功，即将返回', U( 'Config/index' ) );
+		if ( is_file( $config_path ) ) {
+			$this->setConfig();
+			$this->bulidConfig( $config_path );
+			$this->assign( 'waittime', 5 );
+			$this->success( '操作成功，即将返回', U( 'Config/index' ) );
+		} else {
+			$this->success( '还木有任何项目', U( 'Config/index' ) );
+		}
 	}
 
 	private function setConfig() {
@@ -96,6 +99,10 @@ class ConfigAction extends CommonAction
 	}
 
 	private function bulidConfig( $config_path ) {
+		$base = cookie( 'base_dir' );
+		if (substr(PHP_SAPI,0,6)=='apache' && is_dir( $base ) && isset($this->conf_info['URL_MODEL']) && $this->conf_info['URL_MODEL']==2 && !file_exists( $base.'.htaccess' ) ) {
+			file_put_contents( $base.'.htaccess', '<IfModule mod_rewrite.c>'.PHP_EOL.'#此文件由ThinPHP助手自动创建'.PHP_EOL.'#ThinkPHP URL去index.php规则'.PHP_EOL.'RewriteEngine on'.PHP_EOL.'RewriteCond %{REQUEST_FILENAME} !-d'.PHP_EOL.'RewriteCond %{REQUEST_FILENAME} !-f'.PHP_EOL.'RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]'.PHP_EOL.'</IfModule>' );
+		}
 		$config = var_export( $this->conf_info, true );
 		$config = "<?php\nreturn ".preg_replace( array(
 													  '/\'true\'/i',
