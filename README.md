@@ -1,3 +1,5 @@
+## 更新内容可查看changelog.md文件
+
 #ThinkPHP助手
 
 ### 简介
