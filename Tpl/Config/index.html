@@ -53,7 +53,7 @@ $(function () {
 	};
 	//为当前配置文件对应的菜单加高亮
 	$.each(a, function (v, k) {
-		if (app_path.lastIndexOf($(this).text()) > 0) {
+		if (app_path==dir+$(this).text()) {
 			$(this).parent().addClass('active');
 		}
 	})
