@@ -27,9 +27,9 @@
 			<td class="app_index"></td>
 			<td class="app_url"><a href="" target="_blank">访问</a></td>
 			<script type="text/javascript">
-				$('td.app_index').text($.cookies.get('app_index'));
-				$('td.app_name').text($.cookies.get('app_name'));
-				$('td.app_url>a').attr('href',$.cookies.get('app_url'));
+				$('td.app_index').text($.cookies.get(cookie_prefix+'app_index'));
+				$('td.app_name').text($.cookies.get(cookie_prefix+'app_name'));
+				$('td.app_url>a').attr('href',$.cookies.get(cookie_prefix+'app_url'));
 			</script>
 			<td><{$Think.const.THINK_VERSION}></td>
 		</tr>
