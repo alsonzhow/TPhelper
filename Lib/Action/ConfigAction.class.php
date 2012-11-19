@@ -40,8 +40,7 @@ class ConfigAction extends CommonAction
 		'TMPL_PARSE_STRING',
 		'LOAD_EXT_CONFIG',
 		'REST_OUTPUT_TYPE',
-		'HTML_CACHE_RULES'
-	);
+		'HTML_CACHE_RULES' );
 	/**
 	 * 需要过滤的键为固定字符串的一维数组配置
 	 * @var array
@@ -49,18 +48,22 @@ class ConfigAction extends CommonAction
 	protected $tobefilter = array( 'SESSION_OPTIONS' );
 	protected $error = array();
 
-
 	public function index() {
 		if ( isset($_GET['config_path']) ) {
-			cookie( 'config_path', realpath($_GET['config_path'] ));
+			cookie( 'config_path', realpath( $_GET['config_path'] ) );
 		}
-
-		$dir = cookie('base_dir');
+		$dir     = cookie( 'base_dir' );
+		$configs = include $dir.'Conf/config.php';
 		if ( is_dir( $dir ) ) {
 			chdir( $dir );
 			$config_list = glob( 'Conf'.DIRECTORY_SEPARATOR.'{*,*'.DIRECTORY_SEPARATOR.'*}.php', GLOB_BRACE );
-			chdir ( APP_PATH );
+			if ( $configs['APP_GROUP_MODE']=='1' && $configs['APP_GROUP_PATH'] ) {
+				$config_list2 = glob( CheckConfig::dirModifier( $configs['APP_GROUP_PATH'] ).'*/Conf/{*,*/*}.php', GLOB_BRACE );
+				$config_list=array_merge($config_list,$config_list2);
+			}
+			chdir( APP_PATH );
 			$config_list = preg_grep( '/alias.php$|tags.php$/iU', $config_list, PREG_GREP_INVERT );
+			Console::log( $config_list );
 			if ( count( $config_list )>0 ) {
 				$this->assign( 'config_list', $config_list );
 				$this->assign( 'dir', $dir );
@@ -73,19 +76,21 @@ class ConfigAction extends CommonAction
 	}
 
 	public function build() {
-		$this->source =isset($_GET['filter'])?array_filter(array_unique( array_merge( $this->source, explode( ",", trim( $_GET['filter'], ', ' ) ) ) )):$this->source;
+		$this->source = isset($_GET['filter']) ? array_filter( array_unique( array_merge( $this->source, explode( ",", trim( $_GET['filter'], ', ' ) ) ) ) ) : $this->source;
 		$config_path  = cookie( 'config_path' );
 		$this->setConfig();
 		$this->bulidConfig( $config_path );
 		$this->assign( 'waittime', 3 );
-		$this->success('操作成功，即将返回',U('Config/index'));
+		$this->success( '操作成功，即将返回', U( 'Config/index' ) );
 	}
 
 	private function setConfig() {
 		$this->conf_info = $_POST;
 		$this->mergeKV();
 		foreach ( $this->tobefilter as $item ) {
-			$this->conf_info[$item] = array_filter( $this->conf_info[$item], array( $this,'filter' ) );
+			$this->conf_info[$item] = array_filter( $this->conf_info[$item], array(
+																				  $this,
+																				  'filter' ) );
 		}
 		$this->conf_info = array_filter( $this->conf_info );
 	}
@@ -108,9 +113,11 @@ class ConfigAction extends CommonAction
 
 	private function mergeKV() {
 		foreach ( $this->source as $conf_item ) {
-			$i    = 1;
-			$item = $this->conf_info[$conf_item]; //根据配置项目名称取出需要处理的数组保存到到$item
-			$item = array_filter( $item, array( $this,'filter' ) ); //过滤掉空字符串
+			$i       = 1;
+			$item    = $this->conf_info[$conf_item]; //根据配置项目名称取出需要处理的数组保存到到$item
+			$item    = array_filter( $item, array(
+												 $this,
+												 'filter' ) ); //过滤掉空字符串
 			$compact = array(); //存放处理好的元素
 			$count   = count( $item );
 			while ( true ) {
@@ -163,7 +170,7 @@ class ConfigAction extends CommonAction
 				$this->ajaxReturn( array( 'error'=> '项目的配置文件'.$file.'不可读、不存在或者还您没有添加任何TP项目' ) );
 			}
 		} else {
-			$this->error('该url只接受ajax请求');
+			$this->error( '该url只接受ajax请求' );
 		}
 	}
 
