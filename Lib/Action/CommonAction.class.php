@@ -30,6 +30,10 @@ class CommonAction extends Action
 			if ( C('COOKIE_PATH')=='/' ) {
 				C( 'COOKIE_PATH', __ROOT__ );
 			}
+			if ( C( 'COOKIE_PREFIX' )=='' ) {
+				$prefix = trim( __ROOT__.'_', '/\\' );
+				C( 'COOKIE_PREFIX', $prefix );
+			}
 			$listapp = new AdminAction();
 			$list    = $listapp->listAPP();
 			if ( $list==false ) {
@@ -61,7 +65,8 @@ class CommonAction extends Action
 
 	protected function include_assign() {
 		$this->assign( 'pagetitle', 'ThinkPHP助手' );
-		$this->assign ( 'waittime', 3 );//success和error默认跳转等待时间
+		$this->assign( 'waittime', 3 );//success和error默认跳转等待时间
+		$this->assign( 'cookie_prefix', C( 'COOKIE_PREFIX' ) );
 	}
 
 	protected function include_fetch() {
