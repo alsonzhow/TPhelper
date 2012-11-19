@@ -5,6 +5,21 @@
 <script type="text/javascript">
 $(function () {
 	var a = $('#config_list').find('a');
+	//表单提交快捷键：ctrl+Enter,隐藏/显示帮助:Ctrl+方向键
+	$('body').on('keydown',function(e){
+		 if(e.ctrlKey) {
+			switch (e.keyCode) {
+				case 37:
+				case 38:
+				case 39:
+				case 40:
+					$('#tips').find('button').trigger('click');
+					break;
+				case 13:
+					$('#setconfig').find('input:submit').trigger('click');
+			}
+		}
+	});
 	//锚点链接之间平滑滚动
 	window.scrollAnchors = function (name) {
 		var offsetY = document.anchors.namedItem(name).offsetTop;
@@ -468,12 +483,18 @@ $(function () {
 		<div id="up-down" style="display: none;">
 			<div id="tip_info">点击右侧表单域即可出现帮助信息</div>
 			<div id="tip_examples">
+
+				<div class="well well-small">
+					表单提交快捷键：<code style="display: inline;">Ctrl+Enter</code><br/>
+					隐藏/显示帮助 : <code style="display: inline;">Ctrl+方向键</code>
+				</div>
+
 				<div class="well well-small">
 					表单中直接填写配置的值即可,有多个值的配置项用逗号分割
 				</div>
 
 				<div class="well well-small">
-					数组配置项目(例如URL路由配置)的左边表单填写元素的字符串key或整数index(不可省略),右边表单填写元素的value部分,点击按钮可增加一个元素.
+					数组配置项目的左边表单不可省略,填写元素的字符串key(例如URL_ROUTE_RULES)或整数index(例如LOAD_EXT_CONFIG),右边表单填写元素的value部分,点击按钮可增加一个元素.
 				</div>
 				<div class="well well-small">
 					留空表单或选下拉选项的择第一个选项,即表示不在配置文件中写入该项(也即使用ThinkPHP默认配置)
