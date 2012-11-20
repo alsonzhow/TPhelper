@@ -103,6 +103,7 @@ var refactCode = function () {
 		code = code.replace(/。/g, '.');
 		code = code.replace(/？/g, '?');
 		code = code.replace(/[  ]/g, ' ');
+		code = code.replace(/[–—‒﹘]/g, '-');
 		editor.setValue(code);
 	}
 }
@@ -312,6 +313,7 @@ $(function () {
 
 	#codelist {
 		background-color: #ffffff;
+		border-radius: 4px;
 	}
 
 	#codelist .nav-header {
