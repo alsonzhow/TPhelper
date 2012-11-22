@@ -108,23 +108,12 @@ var refactCode = function () {
 }
 //常用代码
 var codesnippts = function (itemnum) {
-	var item;
-	switch (itemnum) {
-		case 1:
-			item = "\<\?php \n print_r( class_implements(''));";
-			break
-		case 2:
-			item = "\<\?php \n print_r(class_parents(''));"
-			break
-		case 3:
-			item = "\<\?php \n$methods=array_unique(get_class_methods(''));\nsort($methods);\nprint_r($methods);";
-			break
-		case 4:
-			item = "\<\?php \n print_r(get_class_vars(''))";
-			break
+	if (codelist[itemnum]) {
+		editor.setValue(codelist[itemnum]);
 	}
-	editor.setValue(item);
 }
+var codelist=[];
+
 //CodeMirror格式化和注释功能
 function getSelectedRange() {
 	return { from:editor.getCursor(true), to:editor.getCursor(false) };
@@ -158,6 +147,20 @@ function setFullScreen(cm, full) {
 	cm.refresh();
 }
 $(function () {
+	//获取代码片段数据
+	$.post('__APP__/FileManager/sendxml',{file:'codelist'},function(data,status){
+		if (status == 'success') {
+			var menu=$(data).find('menu').children('ul').clone();
+			if (menu) {
+				$('.codelist').append(menu);
+				var items = $($.parseXML(data)).find('item');
+				$.each(items, function (key, val) {
+					codelist[parseInt($(val).attr('num'))] = $.trim($(val).text());
+				})
+			}
+		}
+	})
+
 	$('#help').popover({
 		placement:'right',
 		trigger  :'hover',
@@ -323,7 +326,46 @@ $(function () {
 		background: #52659E;
 		color: white;
 	}
-
+	.sub-menu{
+		position:relative;
+	}
+	.sub-menu ul{
+		display:none;
+		position: absolute;
+		left:100%;
+		top:0;
+		list-style: none;
+		min-width: 160px;
+		padding: 5px 0;
+		margin: 2px 0 0;
+		list-style: none;
+		background-color: white;
+		border: 1px solid #CCC;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		-webkit-background-clip: padding-box;
+		-moz-background-clip: padding;
+		background-clip: padding-box;
+	}
+	.sub-menu:hover>a{
+		color: white;
+		text-decoration: none;
+		background-color: #0081C2;
+		background-image: -moz-linear-gradient(top, #08C, #0077B3);
+		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#0077B3));
+		background-image: -webkit-linear-gradient(top, #08C, #0077B3);
+		background-image: -o-linear-gradient(top, #08C, #0077B3);
+		background-image: linear-gradient(to bottom, #08C, #0077B3);
+		background-repeat: repeat-x;
+	}
+	.sub-menu:hover ul{
+		display: block;
+	}
 </style>
 </head>
 <body>
@@ -345,17 +387,12 @@ $(function () {
 					<input type="button" value="运行代码" class="btn btn-primary" onclick="runcode()">
 				</div>
 
-				<div class="btn-group">
+				<div class="btn-group codelist">
 					<button type="reset" value="清空代码" class="btn btn-primary" onclick="editor.setValue('\<\?php\n')">清空代码</button>
 					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu">
-						<li><a onclick="codesnippts(1)">class_implements</a></li>
-						<li><a onclick="codesnippts(2)">class_parents</a></li>
-						<li><a onclick="codesnippts(3)">get_class_methods</a></li>
-						<li><a onclick="codesnippts(4)">get_class_vars</a></li>
-					</ul>
+
 				</div>
 				<div class="btn-group">
 					<input type="button" value="格式化所选代码" class="btn btn-primary" onclick="autoFormatSelection()">
