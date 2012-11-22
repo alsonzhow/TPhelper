@@ -147,6 +147,22 @@ function setFullScreen(cm, full) {
 	cm.refresh();
 }
 $(function () {
+	$('body').on('keydown',function(e){
+		if(e.ctrlKey) {
+			var consolediv=$('.console');
+			switch (e.keyCode) {
+				case 37:
+					consolediv.animate({height:['+=100', 'swing']}, 200);
+					break;
+				case 39:
+					consolediv.animate({height:['-=100', 'swing']}, 200);
+					break;
+				case 13:
+					$('.runcode').trigger('click');
+					break;
+			}
+		}
+	});
 	//获取代码片段数据
 	$.post('__APP__/FileManager/sendxml',{file:'codelist'},function(data,status){
 		if (status == 'success') {
@@ -245,7 +261,7 @@ $(function () {
 		top: 0;
 		left: 0;
 		width: 100%;
-		z-index: 9999;
+		z-index: 2000;
 	}
 
 	#output {
@@ -276,7 +292,7 @@ $(function () {
 	.console-body {
 		bottom: 0;
 		width: 100%;
-		z-index: 100;
+		z-index: 2100;
 	}
 
 	.console {
@@ -382,9 +398,9 @@ $(function () {
 		</div>
 		<div class="span9">
 			<div class="">
-				<div class="alert alert-info">撤销：Ctrl+Z 重做：Ctrl+Y 全屏: F11</div>
+				<div class="alert alert-info">撤销：Ctrl+Z | 重做：Ctrl+Y | 全屏: F11 <br/>升高console：Ctrl+Left | 降低console：Ctrl+right | 运行：Ctrl+Enter</div>
 				<div class="btn-group" style="float: right;">
-					<input type="button" value="运行代码" class="btn btn-primary" onclick="runcode()">
+					<input type="button" value="运行代码" class="btn btn-primary runcode" onclick="runcode()">
 				</div>
 
 				<div class="btn-group codelist">
