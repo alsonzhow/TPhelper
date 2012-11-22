@@ -4,9 +4,9 @@
 	<menu id='menu'>
 		<ul class="dropdown-menu">
 
-			<li class='sub-menu'>
+			<li class='dropdown-submenu'>
 				<a>Class信息函数</a>
-				<ul>
+				<ul class="dropdown-menu">
 					<li>
 						<a onclick="codesnippts(1)">class_implements</a>
 					</li>
@@ -21,9 +21,9 @@
 					</li>
 				</ul>
 			</li>
-			<li class="sub-menu">
+			<li class="dropdown-submenu">
 				<a>时间日期函数</a>
-				<ul>
+				<ul class="dropdown-menu">
 					<li>
 						<a onclick="codesnippts(5)">date()</a>
 					</li>
@@ -41,9 +41,9 @@
 			<li>
 				<a onclick="codesnippts(9)">mbstring</a>
 			</li>
-			<li class='sub-menu'>
+			<li class='dropdown-submenu'>
 				<a>字符串函数</a>
-				<ul>
+				<ul class="dropdown-menu">
 					<li>
 						<a onclick="codesnippts(10)">路径处理</a>
 					</li>
