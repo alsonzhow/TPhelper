@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--预置代码片段-->
+<codes>
+	<menu id='menu'>
+		<ul class="dropdown-menu">
+
+			<li class='dropdown-submenu'>
+				<a>Class信息函数</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a onclick="codesnippts(1)">class_implements</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(2)">class_parents</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(3)">get_class_methods</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(4)">get_class_vars</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown-submenu">
+				<a>时间日期函数</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a onclick="codesnippts(5)">date()</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(6)">getdate()</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(7)">strftime()</a>
+					</li>
+					<li>
+						<a onclick="codesnippts(8)">strtotime()</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a onclick="codesnippts(9)">mbstring</a>
+			</li>
+			<li class='dropdown-submenu'>
+				<a>字符串函数</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a onclick="codesnippts(10)">路径处理</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</menu>
+	<fragments>
+		<item num='1'><![CDATA[
+<?php
+print_r( class_implements(''));
+		]]></item>
+		<item num='2'><![CDATA[
+<?php
+print_r(class_parents(''));
+		]]></item>
+		<item num='3'><![CDATA[
+<?php
+$methods=array_unique(get_class_methods(''));
+sort($methods);
+print_r($methods);
+		]]></item>
+		<item num='4'><![CDATA[
+<?php
+print_r(get_class_vars(''));
+		]]></item>
+		<item num='5'><![CDATA[
+<?php
+echo date('Y-m-d').PHP_EOL;
+echo date('y-n-j').PHP_EOL;
+echo date('Y-(F)M-(l)D').PHP_EOL;
+echo date('今天是一年当中的第z天，第W周，星期N').PHP_EOL;
+echo '现在的时间是：'.date('H:i:s a').PHP_EOL;
+echo '现在的时间是：'.date('h:i:s A').PHP_EOL;
+echo '现在的时间是：'.date('G:i:s a').PHP_EOL;
+echo '现在的时间是：'.date('g:i:s A').PHP_EOL;
+echo '时区：'.date('e').PHP_EOL;
+echo 'GMT'.date('P').PHP_EOL;
+echo 'GMT'.date('O').PHP_EOL;
+echo date('c').PHP_EOL;
+echo date('r').PHP_EOL;
+		]]></item>
+		<item num='6'><![CDATA[
+<?php
+print_r( getdate() );
+		]]></item>
+		<item num='7'><![CDATA[
+<?php
+echo strftime('%c').PHP_EOL;
+echo strftime('%F').PHP_EOL;
+echo strftime('%x').PHP_EOL;
+echo strftime('%Y-%m-%d').PHP_EOL;
+echo strftime('%y-%b-%d').PHP_EOL;
+echo strftime('%G-%B-%d').PHP_EOL;
+echo strftime('%g-%h-%d').PHP_EOL;
+echo strftime('%H:%M:%S').PHP_EOL;
+echo strftime('%k:%M:%S').PHP_EOL;
+echo strftime('%l:%M:%S %p').PHP_EOL;
+echo strftime('%I:%M:%S %p').PHP_EOL;
+echo strftime('星期：%u %A(%a)').PHP_EOL;
+		]]></item>
+		<item num='8'><![CDATA[
+<?php
+//int strtotime ( string $time [, int $now = time() ] )
+echo strtotime("now"), "\n";
+echo strtotime("10 September 2000"), "\n";
+echo strtotime("+1 day"), "\n";
+echo strtotime("-1 day"), "\n";
+echo strtotime("+1 week"), "\n";
+echo strtotime("+1 week 2 days 4 hours 2 seconds"), "\n";
+echo strtotime("next Thursday"), "\n";
+echo strtotime("last Monday"), "\n";
+		]]></item>
+		<item num='9'><![CDATA[
+<?PHP
+if(!extension_loaded('mbstring')) die('未安装mbString扩展');
+mb_internal_encoding ('utf-8' );
+$str ="你好PHP！";
+echo strlen( $str ).PHP_EOL;//字节长度
+echo mb_strwidth( $str,'utf-8' ).PHP_EOL;//显示宽度
+echo mb_strlen( $str,'utf-8' ).PHP_EOL;//字符长度
+echo mb_strcut($str,0,3).PHP_EOL;//按字节截取
+echo mb_substr($str,0,3).PHP_EOL;//按字符截取
+echo mb_strimwidth($str,0,7).PHP_EOL;//按显示宽度截取
+echo mb_strimwidth($str,0,7,'...').PHP_EOL;//按显示宽度截取
+		]]></item>
+		<item num='10'>
+			<![CDATA[
+<?php
+$path = "/home/httpd/html/index.php";
+echo basename($path).PHP_EOL;
+echo basename($path,".php").PHP_EOL;
+echo basename("/home/zhuyajie/www/").PHP_EOL;
+echo dirname ( $path ).PHP_EOL;
+print_r( pathinfo('http://localhost/watermaker/index.php') );
+print_r( parse_url( 'http://tech.163.com/digi/12/0917.html?a=123&b=test#top' ) );
+
+$data = array('user'=>array('name'=>'Bob Smith',
+						'age'=>47,'sex'=>'M','dob'=>'5/12/1956'),
+            'pastimes'=>array('golf', 'opera', 'poker', 'rap'),
+			'children'=>array(
+	 			'bobby'=>array('age'=>12,'sex'=>'M'),
+	  			'sally'=>array('age'=>8,'sex'=>'F')),
+            'CEO');
+
+echo http_build_query($data, 'flags_');
+			]]>
+		</item>
+	</fragments>
+</codes>

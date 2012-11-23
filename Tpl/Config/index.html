@@ -188,7 +188,7 @@ $(function () {
 	//读取配置帮助文件config.xml
 	window.getXML = function (num, file) {
 		num = num || 0;
-		file = file || "Conf/config.xml";
+		file = file || "data/config.xml";
 		$.post("__ROOT__/index.php/Config/sendConfig", {file:file, accept:'xml'}, function (data, status) {
 			tips = $("#tips");
 			if (status == 'success') {

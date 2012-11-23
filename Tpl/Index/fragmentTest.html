@@ -109,23 +109,12 @@ var refactCode = function () {
 }
 //常用代码
 var codesnippts = function (itemnum) {
-	var item;
-	switch (itemnum) {
-		case 1:
-			item = "\<\?php \n print_r( class_implements(''));";
-			break
-		case 2:
-			item = "\<\?php \n print_r(class_parents(''));"
-			break
-		case 3:
-			item = "\<\?php \n$methods=array_unique(get_class_methods(''));\nsort($methods);\nprint_r($methods);";
-			break
-		case 4:
-			item = "\<\?php \n print_r(get_class_vars(''))";
-			break
+	if (codelist[itemnum]) {
+		editor.setValue(codelist[itemnum]);
 	}
-	editor.setValue(item);
 }
+var codelist=[];
+
 //CodeMirror格式化和注释功能
 function getSelectedRange() {
 	return { from:editor.getCursor(true), to:editor.getCursor(false) };
@@ -159,6 +148,36 @@ function setFullScreen(cm, full) {
 	cm.refresh();
 }
 $(function () {
+	$('body').on('keydown',function(e){
+		if(e.ctrlKey) {
+			var consolediv=$('.console');
+			switch (e.keyCode) {
+				case 37:
+					consolediv.animate({height:['+=100', 'swing']}, 200);
+					break;
+				case 39:
+					consolediv.animate({height:['-=100', 'swing']}, 200);
+					break;
+				case 13:
+					$('.runcode').trigger('click');
+					break;
+			}
+		}
+	});
+	//获取代码片段数据
+	$.post('__APP__/FileManager/sendxml',{file:'codelist'},function(data,status){
+		if (status == 'success') {
+			var menu=$(data).find('menu').children('ul').clone();
+			if (menu) {
+				$('.codelist').append(menu);
+				var items = $($.parseXML(data)).find('item');
+				$.each(items, function (key, val) {
+					codelist[parseInt($(val).attr('num'))] = $.trim($(val).text());
+				})
+			}
+		}
+	})
+
 	$('#help').popover({
 		placement:'right',
 		trigger  :'hover',
@@ -243,7 +262,7 @@ $(function () {
 		top: 0;
 		left: 0;
 		width: 100%;
-		z-index: 9999;
+		z-index: 2000;
 	}
 
 	#output {
@@ -274,7 +293,7 @@ $(function () {
 	.console-body {
 		bottom: 0;
 		width: 100%;
-		z-index: 100;
+		z-index: 2100;
 	}
 
 	.console {
@@ -325,7 +344,6 @@ $(function () {
 		background: #52659E;
 		color: white;
 	}
-
 </style>
 </head>
 <body>
@@ -342,22 +360,17 @@ $(function () {
 		</div>
 		<div class="span9">
 			<div class="">
-				<div class="alert alert-info">撤销：Ctrl+Z 重做：Ctrl+Y 全屏: F11</div>
+				<div class="alert alert-info">撤销：Ctrl+Z | 重做：Ctrl+Y | 全屏: F11 <br/>升高console：Ctrl+Left | 降低console：Ctrl+right | 运行：Ctrl+Enter</div>
 				<div class="btn-group" style="float: right;">
-					<input type="button" value="运行代码" class="btn btn-primary" onclick="runcode()">
+					<input type="button" value="运行代码" class="btn btn-primary runcode" onclick="runcode()">
 				</div>
 
-				<div class="btn-group">
+				<div class="btn-group codelist">
 					<button type="reset" value="清空代码" class="btn btn-primary" onclick="editor.setValue('\<\?php\n')">清空代码</button>
 					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu">
-						<li><a onclick="codesnippts(1)">class_implements</a></li>
-						<li><a onclick="codesnippts(2)">class_parents</a></li>
-						<li><a onclick="codesnippts(3)">get_class_methods</a></li>
-						<li><a onclick="codesnippts(4)">get_class_vars</a></li>
-					</ul>
+
 				</div>
 				<div class="btn-group">
 					<input type="button" value="格式化所选代码" class="btn btn-primary" onclick="autoFormatSelection()">

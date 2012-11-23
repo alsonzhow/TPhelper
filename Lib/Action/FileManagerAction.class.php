@@ -6,6 +6,8 @@
  */
 class FileManagerAction extends CommonAction
 {
+	private $jslib = 'data/jsLib.xml';
+	private $codelist = 'data/fragmentTest.xml';
 
 	/**
 	 * 扫描项目目录下已存在的js文件
@@ -33,15 +35,15 @@ class FileManagerAction extends CommonAction
 			//			$oldjsLib = $this->scanFile( $dir );//扫描项目下面的js文件
 			$jsLib = new GlobIterator(realpath( 'public'.DIRECTORY_SEPARATOR.'jsLib' ).DIRECTORY_SEPARATOR.'*', GlobIterator::CURRENT_AS_PATHNAME|GlobIterator::KEY_AS_FILENAME);
 			$jsLib = iterator_to_array( $jsLib ); //扫描TP助手下面的js库
-			unset($jsLib['jsLib.xml'], $jsLib['readme.txt']);
+			unset($jsLib['readme.txt']);
 			//			$this->assign( 'oldjsLib', $oldjsLib );
 			$this->assign( 'jsLib', $jsLib );
 		} else {
 			$this->error( '尚未添加TP项目或'.$dir.'目录权限不足' );
 			return;
 		}
-		if ( file_exists( 'public'.DIRECTORY_SEPARATOR.'jsLib'.DIRECTORY_SEPARATOR.'jsLib.xml' ) ) {
-			$doc    = new SimpleXMLIterator('public'.DIRECTORY_SEPARATOR.'jsLib'.DIRECTORY_SEPARATOR.'jsLib.xml', null, true);
+		if ( file_exists( $this->jslib ) ) {
+			$doc    = new SimpleXMLIterator($this->jslib, null, true);
 			$result = array();
 			foreach ( $doc->jslib as $v ) {
 				$r                  = array();
@@ -94,6 +96,9 @@ class FileManagerAction extends CommonAction
 		}
 	}
 
+	public function sendxml(){
+		readfile($this->$_POST['file']);
+	}
 	protected function groupList() {
 		$config = include cookie( 'config_path' );
 	}

@@ -9,7 +9,7 @@ class AdminAction extends CommonAction
 	private $app_name; //应用命名，用于区分不同的项目
 	private $app_path; //即应用的APP_PATH的realpah目录
 	private $app_index; //入口文件完整路径
-	private $applist = "Conf/applist.xml"; //应用列表存放位置
+	private $applist = "data/applist.xml"; //应用列表存放位置
 	private $appinfo = array(); //永远保存应用创建时需要的信息
 	private $error = array();
 
@@ -130,11 +130,11 @@ class AdminAction extends CommonAction
 			if ( $doc->asXML( $this->applist ) ) {
 				return true;
 			} else {
-				$this->error[] = "TinkPHP助手/Conf/applist.xml 写入失败";
+				$this->error[] = "TinkPHP助手/data/applist.xml 写入失败";
 				return false;
 			}
 		} else {
-			$this->error[] = "TinkPHP助手/Conf/applist.xml不存在";
+			$this->error[] = "TinkPHP助手/data/applist.xml不存在";
 			return false;
 		}
 	}

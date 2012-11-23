@@ -8,6 +8,12 @@
 		<size>89.5KB</size>
 	</jslib>
 	<jslib>
+		<file>JQuery_zTree_v3_5</file>
+		<desc>国产jQuery树插件,注意：它依赖jQuery库，请选择一个jQuery版本。</desc>
+		<site>http://www.ztree.me/v3/demo.php</site>
+		<size>60.6KB</size>
+	</jslib>
+	<jslib>
 		<file>jquery-1.7.2.min.js</file>
 		<desc>大名鼎鼎的jQuery</desc>
 		<site>http://jquery.com/</site>
