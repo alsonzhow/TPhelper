@@ -1,3 +1,12 @@
+## v1.1.2
+
+* 代码片段测试，新增快捷键：
+  升高console：Ctrl+Left
+  降低console：Ctrl+right
+  运行：Ctrl+Enter
+* xml数据文件统一放置到data目录
+* jsLib新增了zTree v3.5
+
 ## v1.1.1
 
 * 为TP助手的cookie增加了前缀，防止与本机其他项目发生cookie冲突

@@ -6,7 +6,7 @@
 
 ThinkPHP助手是运行在本地的ThinkPHP开发辅助性工具，也是本人的初学LAMP的学习成果,基于ThinkPHP+XML,前端采用jQuery和Bootstrap。主要目的是将应用开发过程中的一些繁琐的没有技术含量但做起来不太利索的工作剥出来由这个小工具来完成。让开发者把精力保持在开发上，为开发者节省一点时间。目前，这个项目刚刚起步，功能比较少，所以希望感兴趣的TP开发者能多提意见，更希望您能加入到项目的开发中，push您的贡献。
 
-### v1.0功能
+### v1.1功能
 1. **快速创建新项目：**
 
 	一个表单即可完成项目的文件和目录结构创建。
@@ -51,7 +51,7 @@ PHP>=5.3  ThinkPHP>=3.1
 ### 项目主页
 
 https://github.com/snowair/TPhelper
-下载 https://github.com/snowair/TPhelper/tags
+历史版本 https://github.com/snowair/TPhelper/tags
 
 ### 使用方法
 直接解压到web可访问目录,修改index.php中的THINK_PATH常量即可使用。项目基于ThinkPHP，结构也不复杂，Git仓库是完整仓库，方便您进行研究。
@@ -61,4 +61,4 @@ Released under the [Apache License, Version 2.0.](http://www.apache.org/licenses
 
 ### 联系作者
 
-xcoolcc@gmail.com
+xcoolcc@gmail.com QQ:630664
