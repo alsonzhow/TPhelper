@@ -1,3 +1,8 @@
+## v1.1.3
+
+  增加增强版MarkDown编辑器，方便编写文档和笔记，支持表格、微博@链接、Zen coding、**实时预览（ctrl+enter）**、**转html（ctrl+alt+enter）**
+  示范代码：<https://github.com/snowair/TPhelper/wiki/TP%E5%8A%A9%E6%89%8B%E5%A2%9E%E5%BC%BA%E7%89%88Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E7%A4%BA%E8%8C%83%E4%BB%A3%E7%A0%81>
+
 ## v1.1.2
 
 * 代码片段测试，新增快捷键：

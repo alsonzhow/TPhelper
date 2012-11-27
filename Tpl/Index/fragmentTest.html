@@ -2,20 +2,7 @@
 <html>
 <head>
 <include file='Common:header' />
-
-<link rel="stylesheet" href="__ROOT__/asset/CodeMirror/lib/codemirror.css">
-<link rel="stylesheet" href="__ROOT__/asset/CodeMirror/theme/tphelper.css">
-<script src="__ROOT__/asset/CodeMirror/lib/codemirror.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/xml/xml.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/javascript/javascript.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/css/css.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/clike/clike.js"></script>
-<script src="__ROOT__/asset/CodeMirror/mode/php/php.js"></script>
-<script src="__ROOT__/asset/CodeMirror/util/emmet.min.js"></script>
-<!--<script src="__ROOT__/asset/CodeMirror/util/foldcode.js"></script>-->
-<script src="__ROOT__/asset/CodeMirror/util/formatting.js"></script>
-
+<include file='Common:codemirror' />
 <script type="text/javascript">
 var output = '';
 var i = 1;
@@ -115,38 +102,6 @@ var codesnippts = function (itemnum) {
 }
 var codelist=[];
 
-//CodeMirror格式化和注释功能
-function getSelectedRange() {
-	return { from:editor.getCursor(true), to:editor.getCursor(false) };
-}
-function autoFormatSelection() {
-	var range = getSelectedRange();
-	editor.autoFormatRange(range.from, range.to);
-}
-function commentSelection(isComment) {
-	var range = getSelectedRange();
-	editor.commentRange(isComment, range.from, range.to);
-}
-//CodeMirror全屏功能
-function isFullScreen(cm) {
-	return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
-}
-function winHeight() {
-	return window.innerHeight || (document.documentElement || document.body).clientHeight;
-}
-function setFullScreen(cm, full) {
-	var wrap = cm.getWrapperElement(), scroll = cm.getScrollerElement();
-	if (full) {
-		wrap.className += " CodeMirror-fullscreen";
-		scroll.style.height = winHeight() + "px";
-		document.documentElement.style.overflow = "hidden";
-	} else {
-		wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
-		scroll.style.height = "";
-		document.documentElement.style.overflow = "";
-	}
-	cm.refresh();
-}
 $(function () {
 	$('body').on('keydown',function(e){
 		if(e.ctrlKey) {
@@ -193,41 +148,7 @@ $(function () {
 			i++;
 		}
 	})
-	//初始化编辑器
-	window.editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-		lineNumbers   :true,
-		matchBrackets :true,
-		mode          :"application/x-httpd-php",
-		indentUnit    :4,
-		gutter        :true,
-		fixedGutter   :true,
-		indentWithTabs:true,
-		lineWrapping  :true,
-		enterMode     :"keep",
-		tabMode       :"shift",
-		theme         :"tphelper",
-		extraKeys     :{
-			"F11":function (cm) {
-				setFullScreen(cm, !isFullScreen(cm));
-			},
-			"Esc":function (cm) {
-				if (isFullScreen(cm)) setFullScreen(cm, false);
-			}
-		}
-//				,
-//				onCursorActivity: function() {
-//					editor.setLineClass(hlLine, null, null);
-//					hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline");
-//				}
-	});
-	//全屏功能
-	CodeMirror.connect(window, "resize", function () {
-		var showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0];
-		if (!showing) return;
-		showing.CodeMirror.getScrollerElement().style.height = winHeight() + "px";
-	});
-	//高亮所在行
-	var hlLine = editor.setLineClass(0, "activeline");
+
 	//拖动调整console窗口大小
 	var mousestatus;
 	$(document).on({
@@ -256,15 +177,6 @@ $(function () {
 });
 </script>
 <style type="text/css">
-	.CodeMirror-fullscreen {
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		z-index: 2000;
-	}
-
 	#output {
 		height: 100%;
 		padding: 12px 20px;
@@ -317,19 +229,10 @@ $(function () {
 	.console .error .info .title h3 {
 		color: inherit;
 	}
-
-		/*高亮所在行*/
-		/*.activeline {background: #f2f2f2 !important;}*/
-	.CodeMirror-scroll {
-		height: 350px;
-	}
-
-		/*编辑器的初始化高度*/
 	.popover-content {
 		font-size: 14px;
 		white-space: pre-wrap;
 	}
-
 	#codelist {
 		background-color: #ffffff;
 		border-radius: 4px;
@@ -379,7 +282,7 @@ $(function () {
 					<input type="button" id="help" class="btn btn-primary text-html" data-toggle="button" onclick="convertOutput(this)" value="HTML输出">HTML
 				</div>
 				<div style="border: 1px solid #ebebeb;margin: 20px 0;">
-					<textarea name="code" id="code" style="display: none;">&lt;?php echo "hello world";</textarea>
+					<textarea name="code-editor" id="code-editor" style="display: none;">&lt;?php echo "hello world";</textarea>
 				</div>
 			</div>
 		</div>

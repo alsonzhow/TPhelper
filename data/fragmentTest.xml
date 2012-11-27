@@ -49,6 +49,9 @@
 					</li>
 				</ul>
 			</li>
+			<li>
+				<a onclick="codesnippts(11)">图像base64编码</a>
+			</li>
 		</ul>
 	</menu>
 	<fragments>
@@ -151,6 +154,23 @@ $data = array('user'=>array('name'=>'Bob Smith',
 
 echo http_build_query($data, 'flags_');
 			]]>
+		</item>
+		<item num="11">
+<![CDATA[
+<?php
+    function base64_encode_image ($imagefile) {
+        $imgtype = array('jpg', 'gif', 'png');
+        $filename = file_exists($imagefile) ? htmlentities($imagefile) : die('Image file name does not exist');
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        if (in_array($filetype, $imgtype)){
+            $imgbinary = fread(fopen($filename, "rb"), filesize($filename));
+        } else {
+            die ('Invalid image type, jpg, gif, and png is only allowed');
+        }
+        return 'data:image/' . $filetype . ';base64,' . base64_encode($imgbinary);
+    }
+    //echo base64_encode_image ('本地图像文件path');
+]]>
 		</item>
 	</fragments>
 </codes>

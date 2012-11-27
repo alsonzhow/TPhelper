@@ -35,6 +35,10 @@ class IndexAction extends CommonAction
 		$this->display();
 	}
 
+	public function markdown() {
+		$this->display();
+	}
+
 	public function phpinfo() {
 		phpinfo();
 	}
@@ -47,5 +51,9 @@ class IndexAction extends CommonAction
 
 	public function _empty() {
 		$this->index();
+	}
+
+	public function zen() {
+		$this->display();
 	}
 }
