@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include file='Common:header' />
+	<include file='Common:codemirror' />
+	<link rel="stylesheet" href="__ROOT__/asset/markdown.css">
+	<script src="__ROOT__/asset/CodeMirror/lib/util/overlay.js"></script>
+	<script src="__ROOT__/asset/CodeMirror/mode/markdown/markdown.js"></script>
+	<script src="__ROOT__/asset/CodeMirror/mode/gfm/gfm.js"></script>
+	<script src="__ROOT__/asset/CodeMirror/showdown/showdown.js"></script>
+	<script src="__ROOT__/asset/CodeMirror/showdown/extensions/exts.js"></script>
+	<script type="text/javascript">
+		cmoptions.mode = 'gfm';
+		//'github', 'table', 'prettify','weibo','syntaxhighlighter'
+		var converter1 = new Showdown.converter({ extensions:[ 'github', 'table', 'prettify','weibo'] });
+		var converter2 = new Showdown.converter({ extensions:[ 'github', 'table', 'syntaxhighlighter','weibo'] });
+		$(function () {
+			var md_preview = $('.md-preview');
+			var code_editor = $('.md-editor');
+			var md_html = $('.md-html')
+			var md_content = $('.md-content');
+			var i = true;
+			cmoptions.mode = 'text/html';
+			cmoptions.profile = 'xhtml';
+			cmoptions.readOnly = true;
+			window.editor2 = CodeMirror.fromTextArea(document.getElementById('md-html'), cmoptions);
+			$('body').on('keydown', function (e) {
+				if (e.ctrlKey) {
+					switch (e.keyCode) {
+						case 13:
+							if (i) {
+								var html = converter1.makeHtml(editor.getValue());
+								var html2= converter2.makeHtml(editor.getValue());
+								if (e.altKey) {
+									md_html.css('display', 'block');
+									md_preview.css('display', 'none');
+									setTimeout(function () {
+										editor2.setValue(html2);
+									}, 50)
+								} else {
+									md_preview.html(html);
+									md_html.css('display', 'none');
+									md_preview.css('display', 'block');
+									prettyPrint();
+								}
+								code_editor.css('display', 'none');
+								md_content.css('display', 'block');
+								i = false;
+							} else {
+								md_html.css('display', 'none');
+								md_preview.css('display', 'none');
+								code_editor.css('display', 'block');
+								md_content.css('display', 'none');
+								i = true;
+							}
+							break;
+					}
+				}
+			});
+			setInterval(function () {
+				localStorage[cookie_prefix+'_md_content'] = editor.getValue();
+			}, 5000);
+			if (localStorage[cookie_prefix + '_md_content']) {
+				editor.setValue(localStorage[cookie_prefix + '_md_content'])
+			}
+		})
+	</script>
+	<style type="text/css">
+		.CodeMirror-scroll {
+			min-height: 500px;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+<include file='Common:navbar' />
+<div class="container content">
+	<div class="row body-content">
+		<div class='md-editor'>
+			<div class="span3">
+				<include file="Common:leftbar" />
+			</div>
+			<div class="span9">
+
+				<div style="border: 1px solid #ebebeb;">
+					<textarea name="codeeditor" id="code-editor" style="display: none;"></textarea>
+				</div>
+
+			</div>
+		</div>
+		<div class='span12'>
+			<div class='well md-content' style='display:none;background-color: #fff;'>
+				<div class='md-html' style='display: none;'>
+					<textarea id='md-html' readonly style='width:100%;display: none;'>123
+					</textarea>
+				</div>
+				<div class='md-preview markdown-body' style='display: none;'>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<{$footer}>
+</body>
+</html>

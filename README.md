@@ -1,4 +1,6 @@
-## 更新内容可查看changelog.md文件
+## 详细更新内容可查看changelog.md文件
+
+* v1.1.3更新 增加增强版markdown编辑器
 
 #ThinkPHP助手
 

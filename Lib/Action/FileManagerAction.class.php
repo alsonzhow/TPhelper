@@ -6,7 +6,15 @@
  */
 class FileManagerAction extends CommonAction
 {
+	/**
+	 * js库信息数据文件
+	 * @var string
+	 */
 	private $jslib = 'data/jsLib.xml';
+	/**
+	 * 预置代码片段数据文件
+	 * @var string
+	 */
 	private $codelist = 'data/fragmentTest.xml';
 
 	/**

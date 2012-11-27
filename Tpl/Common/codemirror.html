@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="__ROOT__/asset/CodeMirror/lib/codemirror.css">
+<link rel="stylesheet" href="__ROOT__/asset/CodeMirror/theme/tphelper.css">
+<script src="__ROOT__/asset/CodeMirror/lib/codemirror.js"></script>
+<script src="__ROOT__/asset/CodeMirror/lib/util/emmet.min.js"></script>
+<script src="__ROOT__/asset/CodeMirror/lib/util/formatting.js"></script>
+<!--<script src="__ROOT__/asset/CodeMirror/util/foldcode.js"></script>-->
+<script src="__ROOT__/asset/CodeMirror/mode/xml/xml.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/javascript/javascript.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/css/css.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/mysql/mysql.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/php/php.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/clike/clike.js"></script>
+<script src="__ROOT__/asset/CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+<style type="text/css">
+	.CodeMirror-fullscreen {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 2000;
+	}
+	/*高亮所在行*/
+	.activeline {background: #f2f2f2 !important;}
+	/*编辑器的初始化高度*/
+	.CodeMirror-scroll {
+		height: 350px;
+	}
+</style>
+<script type="text/javascript">
+	//CodeMirror格式化和注释功能
+	function getSelectedRange() {
+		return { from:editor.getCursor(true), to:editor.getCursor(false) };
+	}
+	function autoFormatSelection() {
+		var range = getSelectedRange();
+		editor.autoFormatRange(range.from, range.to);
+	}
+	function commentSelection(isComment) {
+		var range = getSelectedRange();
+		editor.commentRange(isComment, range.from, range.to);
+	}
+	//CodeMirror全屏功能
+	function isFullScreen(cm) {
+		return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
+	}
+	function winHeight() {
+		return window.innerHeight || (document.documentElement || document.body).clientHeight;
+	}
+	function setFullScreen(cm, full) {
+		var wrap = cm.getWrapperElement(), scroll = cm.getScrollerElement();
+		if (full) {
+			wrap.className += " CodeMirror-fullscreen";
+			scroll.style.height = winHeight() + "px";
+			document.documentElement.style.overflow = "hidden";
+		} else {
+			wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
+			scroll.style.height = "";
+			document.documentElement.style.overflow = "";
+		}
+		cm.refresh();
+	}
+	CodeMirror.defaults.extraKeys={
+		"F11":function (cm) {
+			setFullScreen(cm, !isFullScreen(cm));
+		},
+		"Esc":function (cm) {
+			if (isFullScreen(cm)) setFullScreen(cm, false);
+		}
+	}
+	var cmoptions={
+		lineNumbers   :true,
+		matchBrackets :true,
+		mode          :"application/x-httpd-php",
+		indentUnit    :4,
+		gutter        :true,
+		fixedGutter   :true,
+		indentWithTabs:true,
+		lineWrapping  :true,
+		enterMode     :"keep",
+		tabMode       :"shift",
+		theme         :"tphelper"
+	};
+	var cmid='code-editor';
+	//自定义快捷键
+	$(function(){
+		//初始化编辑器
+		window.editor = CodeMirror.fromTextArea(document.getElementById(cmid), cmoptions );
+		//高亮所在行
+		var hlLine = editor.setLineClass(0, "activeline");
+		editor.setOption('onCursorActivity',function () {
+			editor.setLineClass(hlLine, null, null);
+			hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline")});
+		//全屏功能
+		CodeMirror.connect(window, "resize", function () {
+			var showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0];
+			if (!showing) return;
+			showing.CodeMirror.getScrollerElement().style.height = winHeight() + "px";
+		});
+	})
+</script>
