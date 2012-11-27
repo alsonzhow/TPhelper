@@ -1,6 +1,6 @@
 ## 详细更新内容可查看changelog.md文件
 
-* v1.1.3更新 增加增强版markdown编辑器
+* v1.1.3更新 增加[增强版markdown编辑器](https://github.com/snowair/TPhelper/wiki/TP%E5%8A%A9%E6%89%8B%E5%A2%9E%E5%BC%BA%E7%89%88Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E7%A4%BA%E8%8C%83%E4%BB%A3%E7%A0%81)
 
 #ThinkPHP助手
 
