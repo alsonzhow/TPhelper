@@ -52,8 +52,4 @@ class IndexAction extends CommonAction
 	public function _empty() {
 		$this->index();
 	}
-
-	public function zen() {
-		$this->display();
-	}
 }
