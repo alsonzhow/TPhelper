@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Tphelper by snowair</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/snowair/TPhelper">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Tphelper</h1>
+            <h2>ThinkPHP助手</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/snowair/TPhelper/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/snowair/TPhelper/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h2>详细更新内容可查看changelog.md文件</h2>
+
+<ul>
+<li>v1.1.3更新 增加<a href="https://github.com/snowair/TPhelper/wiki/TP%E5%8A%A9%E6%89%8B%E5%A2%9E%E5%BC%BA%E7%89%88Markdown%E7%BC%96%E8%BE%91%E5%99%A8%E7%A4%BA%E8%8C%83%E4%BB%A3%E7%A0%81">增强版markdown编辑器</a>
+</li>
+</ul><h1>ThinkPHP助手</h1>
+
+<h3>简介</h3>
+
+<p>ThinkPHP助手是运行在本地的ThinkPHP开发辅助性工具，也是本人的初学LAMP的学习成果,基于ThinkPHP+XML,前端采用jQuery和Bootstrap。主要目的是将应用开发过程中的一些繁琐的没有技术含量但做起来不太利索的工作剥出来由这个小工具来完成。让开发者把精力保持在开发上，为开发者节省一点时间。目前，这个项目刚刚起步，功能比较少，所以希望感兴趣的TP开发者能多提意见，更希望您能加入到项目的开发中，push您的贡献。</p>
+
+<h3>v1.1功能</h3>
+
+<ol>
+<li>
+<p><strong>快速创建新项目：</strong></p>
+
+<p>一个表单即可完成项目的文件和目录结构创建。
+<img src="https://github.com/snowair/TPhelper/blob/master/screenshot/1.jpg?raw=true" alt="Plugin Screenshot"></p>
+</li>
+<li>
+<p><strong>项目配置文件编辑：</strong></p>
+
+<p>TP有各类一百多项配置，要记住这些配置不是件容易事，ThinkPHP助手将这一百多项配置进行了归类整理，通过它，你可以随时修改项目的任何一项配置。**每一项配置，都有简要的帮助信息和官方文档的链接**,所以它也是你深入了解和学习ThinkPHP的好帮手。并且**完全支持自定义配置项的修改**。
+<img src="https://github.com/snowair/TPhelper/blob/master/screenshot/2.png?raw=true" alt="Plugin Screenshot"></p>
+</li>
+<li>
+<p><strong>添加前端库：</strong></p>
+
+<p>您可以一键将一些常用的js库文件添加到项目中
+<img src="https://github.com/snowair/TPhelper/blob/master/screenshot/5.png?raw=true" alt="Plugin Screenshot"></p>
+</li>
+<li>
+<p><strong>PHP代码片段测试：</strong></p>
+
+<p>如果您需要实验一小段PHP代码，您不必像以往那样：新建，编辑，浏览，删除,在不同的软件之间切换。现在您可以直接在TP助手提供的PHP代码片段测试中运行这些临时性的代码，当您查阅PHP手册或者社区文章中的代码时，您只需简单地：复制，粘贴，运行，然后就后可以看到执行效果。
+<img src="https://github.com/snowair/TPhelper/blob/master/screenshot/4.png?raw=true" alt="Plugin Screenshot"></p>
+</li>
+<li>
+<p><strong>PHP正则助手：</strong></p>
+
+<p>还在用js的POSIX正则表达式测试工具调试PHP的PCRE正则表达式吗？
+<strong>原生的preg_</strong>*函数正则表达式测试，支持**preg_match，preg_match_all，preg_replace**三种函数。
+<img src="https://github.com/snowair/TPhelper/blob/master/screenshot/3.png?raw=true" alt="Plugin Screenshot"></p>
+</li>
+<li>
+<p><strong>Console工具支持</strong></p>
+
+<p>封装了对FirePHP和ChromePHP的支持，使用兼容二者的调试语句输出变量。您可以一键为任何一个TP项目增加Console调试功能，并可随时关闭功能   。
+<img src="https://github.com/snowair/TPhelper/blob/master/asset/img/chromePHP.png?raw=true" alt="Plugin Screenshot"></p>
+</li>
+</ol><h3>浏览器要求</h3>
+
+<ul>
+<li><p>Chrome</p></li>
+<li><p>FireFox</p></li>
+<li><p>IE9 IE10
+不支持IE6-8</p></li>
+</ul><h3>环境需求</h3>
+
+<p>PHP&gt;=5.3  ThinkPHP&gt;=3.1
+兼容3.0。由于精力有限，不能进行详细的3.0兼容性测试，如果发现某些地方不兼容3.0,可将不兼容地地方报告，我很快可更新。</p>
+
+<h3>项目主页</h3>
+
+<p><a href="https://github.com/snowair/TPhelper">https://github.com/snowair/TPhelper</a>
+历史版本 <a href="https://github.com/snowair/TPhelper/tags">https://github.com/snowair/TPhelper/tags</a></p>
+
+<h3>使用方法</h3>
+
+<p>直接解压到web可访问目录,修改index.php中的THINK_PATH常量即可使用。项目基于ThinkPHP，结构也不复杂，Git仓库是完整仓库，方便您进行研究。</p>
+
+<h3>License</h3>
+
+<p>Released under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0.</a>.</p>
+
+<h3>联系作者</h3>
+
+<p><a href="mailto:xcoolcc@gmail.com">xcoolcc@gmail.com</a> QQ:930664</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/snowair">snowair</a> can be found on <a href="https://github.com/snowair/TPhelper">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
