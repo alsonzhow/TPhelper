@@ -84,8 +84,6 @@ var checkFiled = function (id, field) {
 		case 'TMPL_CACHFILE_SUFFIX':
 		case 'HTML_FILE_SUFFIX':
 			return checkMethod.isSuffix(field);
-		case 'DB_DSN':
-			return checkMethod.isDSN(field);
 		case 'TMPL_CONTENT_TYPE':
 		case 'isMIME':
 			return checkMethod.isMIME(field);
@@ -100,6 +98,7 @@ var checkFiled = function (id, field) {
 		case 'TMPL_EXCEPTION_FILE':
 			return checkMethod.isConstPath(field);
 		case 'DB_NAME':
+			return checkMethod.isWord(field)||checkMethod.isPath(field);
 		case 'DB_USER':
 		case 'DB_PREFIX':
 		case 'COOKIE_PREFIX':
@@ -206,9 +205,6 @@ var CheckMethod = function () {
 	};
 	this.isHost = function (data) {
 		return this.isDomain(data) || this.isIp(data) || data == 'localhost';
-	};
-	this.isDSN = function (data) {
-		return /^(mysql):(host|dbname)=\w*(:\d*)?;(host|dbname)=\w*$/.test(data);
 	};
 	this.isMIME = function (data) {
 		return /^\w*\/[-.\w]*$/.test(data);
